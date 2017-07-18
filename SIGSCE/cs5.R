@@ -1,26 +1,44 @@
+# Read in Data
 cs5_df <- read.csv("fulldata_42.csv")
 
-#Take out CS5 and the labs that go along with CS courses
+# Take out CS5 and the labs that go along with CS courses
 drops <- c("CSCI005..HM", "CSCI005L.HM", "CSCI005GLHM", "CSCI005GRHM", "CSCI105L.HM", "CSCI105.LPO", "CSCI105L.JT", "CSCI121L.HM", "CSCI070L.HM")
 cs5_df <- cs5_df[,!(names(cs5_df) %in% drops)]
 
+# Separate data into gold, black, and green
 gold <- subset(cs5_df, cs5_df$X == "gold")
 black <- subset(cs5_df, cs5_df$X == "black")
 green <- subset(cs5_df, cs5_df$X == "green")
 
+# Calculates the total number of CS or Bio courses taken in a gold, green, or black cohort
+# department is either "CS" or "BIO" as a string
+# data is gold, green, or black
+# Returns an integer number of courses
 calculate_num_courses <- function(department, data){
   courses_in_department <- data[,grepl(department, names(data))]
   sum(!is.na(courses_in_department))
 }
 
+# Calculates the number of CS or Bio courses taken by each student in a gold, green, or black cohort
+# department is either "CS" or "BIO" as a string
+# data is gold, green, or black
+# returns a vector of integer numbers of courses by student
 calculate_num_courses_by_student <- function(department, data){
   courses_in_department <- data[,grepl(department, names(data))]
   rowSums(!is.na(courses_in_department))
 }
-calculate_num_cs_majors <- function(courses_by_student, data){
+
+# Calculates the number of CS majors in a gold, green, or black cohort
+# data is gold, green, or black
+calculate_num_cs_majors <- function(data){
+  courses_by_student <- calculate_num_courses_by_student("CS", data)
   sum(courses_by_student > 9)
 }
-calculate_num_bio_majors <-function(courses_by_student, data){
+
+# Calculates the number of Bio majors in a gold, green, or black cohort
+# data is gold, green, or black
+calculate_num_bio_majors <-function(data){
+  courses_by_student <- calculate_num_courses_by_student("BIO", data)
   taken_191 <- data[,grepl("BIOL191", names(data))]
   taken_192 <- data[,grepl("BIOL192", names(data))]
   sum(!is.na(taken_191) | !is.na(taken_192) & (courses_by_student > 9))
@@ -55,8 +73,8 @@ green_bio_by_student <-subset(green_bio_by_student, green_bio_by_student > 1)
 
 par(mfrow=c(1,1))
 
+# First three columns are shades of blue (CS5, CS60, CS70), everything after is white
 colors <- c("darkslategrey","darkslategray4", "darkslategray3")
-#special <- ifelse(sort(unique(gold_cs_by_student)) %in% c(0, 1, 2), "blue", "white")
 special <- c(colors, rep("white", 20))
 
 hist(gold_cs_by_student, las=1, breaks=20, xlim = c(0, 18), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Gold Students", col=special)
@@ -68,14 +86,14 @@ hist(green_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xla
 legend("topright", c("CS5","CS60", "CS70"), fill=colors)
 
 #Calculate number of Bio majors
-gold_bio_majors <- calculate_num_bio_majors(gold_bio_by_student, gold)
-black_bio_majors <- calculate_num_bio_majors(black_bio_by_student, black)
-green_bio_majors <- calculate_num_bio_majors(green_bio_by_student, green)
+gold_bio_majors <- calculate_num_bio_majors(gold)
+black_bio_majors <- calculate_num_bio_majors(black)
+green_bio_majors <- calculate_num_bio_majors(green)
 
 #Calculate number of CS majors
-gold_cs_majors <- calculate_num_cs_majors(gold_cs_by_student, gold)
-black_cs_majors <- calculate_num_cs_majors(black_cs_by_student, black)
-green_cs_majors <- calculate_num_cs_majors(green_cs_by_student, green)
+gold_cs_majors <- calculate_num_cs_majors(gold)
+black_cs_majors <- calculate_num_cs_majors(black)
+green_cs_majors <- calculate_num_cs_majors(green)
 
 
 
