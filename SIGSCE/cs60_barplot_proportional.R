@@ -15,13 +15,13 @@ df_combined$Major_group <- combineLevels(df_combined$Major_group, c("NEU","BIO",
 df_combined$Major_group <-combineLevels(df_combined$Major_group,c("E&E", "ECO", "EEP", "MEC", "ECA"),"Econ")
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("PTS", "PIR", "POL", "GOV", "PPE", "PHI", "INT", "IPE","MEN","ARS"), "Politics, IR, Philosophy")
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("PSY", "SOC", "ANT", "HIS", "RST", "STS", "CHS", "LCS", "LIN"), "Social Sciences")
-df_combined$Major_group <- combineLevels(df_combined$Major_group, c("MUS", "ART", "FRE", "MDS"), "Art, Language, Media")
+df_combined$Major_group <- combineLevels(df_combined$Major_group, c("MUS", "ART", "FRE", "MDS", "SPA"), "Art, Language, Media")
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("IPS"), "Independent Program")
 
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("ENG", "MGE", "32E", "EGR"), "Engineering")
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("CSI", "CSM"), "Computer Science")
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("482", "518", "559", "MAB",
-                                                                     "NON", "SDM", "SPA"), "Don't Include")
+                                                                     "NON", "SDM"), "Don't Include")
 
 #Take out CS, ENG, and UND majors
 df_no_cs <- subset(df_combined, (Major_group != "Engineering"))
@@ -59,14 +59,10 @@ top_5_2016 <- calculate_top_n_majors(data_2016, 5)
 top_5_2017 <- calculate_top_n_majors(data_2017, 5)
 
 #Create table- count of majors by year
-#ordered_names <- c("PHY", "MAT","ECO","MCB","CHE","NEU","ORG","CHB","IPS","MGE","E&E","ANT")
 tab <- table(df_no_cs$Major_group, df_no_cs$Year)
 proportion <- prop.table(tab, margin = 2)
-#tab <- tab[top_5_names,]
-
 
 #Make the plot
-
 op <- par(mar = c(5,6,4,12))
 clrs <- c("red", "orange", "yellow", "green", "cyan", "dodgerblue2", "dodgerblue4", "darkslateblue", "darkorchid")
 barplot(proportion, col = clrs,  xlab="Year", ylab="Proportion of non-CS majors",legend=rownames(tab), las=1, args.legend = list(x = 'right', bty='n', inset=c(-.7,0), xpd = TRUE))
