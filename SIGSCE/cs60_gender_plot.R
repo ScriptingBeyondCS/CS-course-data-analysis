@@ -1,4 +1,4 @@
-library(ggplot2)
+flibrary(ggplot2)
 library(rockchalk)
 
 #Set up column headers for data
