@@ -60,12 +60,12 @@ top_5_2017 <- calculate_top_n_majors(data_2017, 5)
 
 #Create table- count of majors by year
 tab <- table(df_no_cs$Major_group, df_no_cs$Year)
-proportion <- prop.table(tab, margin = 2)
+proportion <- prop.table(tab, margin = 2)*100
 
 #Make the plot
 op <- par(mar = c(5,6,4,12))
 clrs <- c("red", "orange", "yellow", "green", "cyan", "dodgerblue2", "dodgerblue4", "darkslateblue", "darkorchid")
-barplot(proportion, col = clrs,  xlab="Year", ylab="Proportion of non-CS majors",legend=rownames(tab), las=1, args.legend = list(x = 'right', bty='n', inset=c(-.7,0), xpd = TRUE))
+barplot(proportion, col = clrs,  xlab="Year", ylab="Percent of non-CS majors",legend=rownames(tab), las=1, args.legend = list(x = 'right', bty='n', inset=c(-.7,0), xpd = TRUE))
 title(main="Proportion of CS60 Students with Non-CS Majors by Year",adj=0.3)
 par(op)
 
