@@ -1,4 +1,4 @@
-flibrary(ggplot2)
+library(ggplot2)
 library(rockchalk)
 
 #Set up column headers for data
@@ -43,8 +43,8 @@ for(index in 1:nrow(major_by_gender_df)){
 }
 
 # X Axis Breaks and Labels 
-brks <- seq(-200, 200, 50)
-lbls = c(200, 150, 100, 50, 0, 50, 100, 150, 200)
+brks <- seq(-300, 300, 50)
+lbls = c(300, 250, 200, 150, 100, 50, 0, 50, 100, 150, 200, 250, 300)
 
 # Plot
 plot <- ggplot(major_by_gender_df, aes(x = Major, y = Count, fill = Sex)) +   # Fill column
@@ -55,7 +55,8 @@ plot <- ggplot(major_by_gender_df, aes(x = Major, y = Count, fill = Sex)) +   # 
   labs(title="CS60 Majors by Gender from 2009 to 2017") +
   theme(plot.title = element_text(hjust = .5),
         axis.ticks = element_blank()) +   # Centre plot title
-  scale_fill_manual(values = c("darkslateblue","darkslategray3"))
-  #scale_fill_brewer(palette = "Set2")  # Color palette
+  scale_fill_manual(values = c("darkslateblue","darkslategray3")) +
+  geom_text(aes(label=abs(Count)),  colour="black",hjust=rep(c(-.1, 1.1), 11),
+           size=3)
 
 print(plot)

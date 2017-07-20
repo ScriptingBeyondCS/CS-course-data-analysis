@@ -32,5 +32,6 @@ project_categories_df <- read.csv("CS35_project_categories.csv")
 categories <- project_categories_df$Motivation.Category
 category_table <- table(categories)
 p_table <- prop.table(category_table)
-plot(p_table)
+lbls = c("Academic 18%","Personal 53%", "Technical 29%")
+pie(p_table,labels=lbls, main="CS35 Final Projects by Motivation")
 
