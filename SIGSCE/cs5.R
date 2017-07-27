@@ -98,16 +98,16 @@ z.test(gold_cs_by_student, black_cs_by_student, alternative="two.sided", mu = 0,
 par(mfrow=c(1,1))
 
 # First three columns are shades of blue (CS5, CS60, CS70), everything after is white
-colors <- c("darkslategrey","darkslategray4", "darkslategray3")
+colors <- c("darkslategrey","darkslategray4")
 special <- c(colors, rep("white", 20))
 
-hist(gold_cs_by_student, las=1, breaks=20, xlim = c(0, 18), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Gold Students", col=special)
+hist(gold_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Gold Students", col=special)
 #hist(gold_bio_by_student, las=1, breaks=20, xlim = c(0, 18), ylim = c(0,500), xlab="Number of courses taken", ylab="Number of students", main="Number of Biology courses taken by CS5 Gold Students", col=special)
 hist(black_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Black Students", col=special)
 #hist(black_bio_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,200), xlab="Number of courses taken", ylab="Number of students", main="Number of Biology courses taken by CS5 Black Students", col=special)
 hist(green_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Green Students", col=special)
 #hist(green_bio_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,100), xlab="Number of courses taken", ylab="Number of students", main="Number of Biology courses taken by CS5 Green Students", col=special)
-legend("topright", c("CS5","CS60", "CS70"), fill=colors)
+legend("topright", c("CS60","CS70"), fill=colors)
 
 #Calculate number of Bio majors
 gold_bio_majors <- calculate_num_bio_majors(gold)
