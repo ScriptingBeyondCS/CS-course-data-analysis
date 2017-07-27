@@ -71,7 +71,7 @@ proportion <- prop.table(tab, margin = 2)*100
 op <- par(mar = c(5,6,4,12))
 angle1 <- rep(c(45,45,135), length.out=9)
 density1 <- c(seq(20,40,length.out=4), seq(80, 100, length.out=5))
-clrs <- c("red", "orange", "yellow", "green", "cyan", "dodgerblue2", "dodgerblue4", "darkslateblue", "darkorchid")
+clrs <- c("red", "orange", "yellow", "green", "cyan3", "dodgerblue2", "dodgerblue4", "darkslateblue", "darkorchid")
 barplot(proportion, col = clrs,  xlab="Year", ylab="Percent of non-CS majors",legend=rownames(tab), las=1, 
         args.legend = list(x = 'right', bty='n', inset=c(-.7,0), xpd = TRUE), angle=angle1, density=density1)
 title(main="Percent of CS60 Students with Non-CS Majors by Year",adj=0.3)
