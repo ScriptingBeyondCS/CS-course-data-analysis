@@ -23,10 +23,10 @@ df_combined$Major_group <- combineLevels(df_combined$Major_group, c("CSI", "CSM"
 df_combined$Major_group <- combineLevels(df_combined$Major_group, c("482", "518", "559", "MAB",
                                                                      "NON", "SDM"), "Don't Include")
 
-df_cs_or_not$Major_group <- combineLevels(df_combined$Major_group, c("Physics", "Math", "Math/Comp. Bio.", "Natural Sciences", "Econ", "Politics, IR, Philosophy", "Social Sciences", 
-                                                         "Art, Language, Media", "Independent Program"), "Not CS")
-df_cs_or_not$Major_group <- combineLevels(df_cs_or_not$Major_group, c("Engineering", "Computer Science"), "CS")
-df_cs_or_not$Major_group <- combineLevels(df_cs_or_not$Major_group, c("UND", "Don't Include"), "UND")
+#df_cs_or_not$Major_group <- combineLevels(df_combined$Major_group, c("Physics", "Math", "Math/Comp. Bio.", "Natural Sciences", "Econ", "Politics, IR, Philosophy", "Social Sciences", 
+                                      #                   "Art, Language, Media", "Independent Program"), "Not CS")
+#df_cs_or_not$Major_group <- combineLevels(df_cs_or_not$Major_group, c("Engineering", "Computer Science"), "CS")
+#df_cs_or_not$Major_group <- combineLevels(df_cs_or_not$Major_group, c("UND", "Don't Include"), "UND")
 
 #Take out CS, ENG, and UND majors
 df_no_cs <- subset(df_combined, (Major_group != "Engineering"))
