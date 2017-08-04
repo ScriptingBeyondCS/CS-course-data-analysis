@@ -1,3 +1,5 @@
+library(BSDA)
+
 # Read in Data
 cs5_df <- read.csv("fulldata_42.csv")
 
@@ -56,34 +58,56 @@ total_green_bio_courses <- calculate_num_courses("BIO", green)
 
 #Calculate number of CS and BIO courses taken by each student in each CS5 course
 #Take out students with 0 courses (only taken cs5)
-gold_cs_by_student <- calculate_num_courses_by_student("CS", gold)
+gold_cs_by_student <- calculate_num_courses_by_student("CS", gold)+1
 gold_bio_by_student <- calculate_num_courses_by_student("BIO", gold)
-gold_cs_by_student <-subset(gold_cs_by_student, gold_cs_by_student > 0)
-gold_bio_by_student <-subset(gold_bio_by_student, gold_bio_by_student > 1)
+#gold_cs_by_student <-subset(gold_cs_by_student, gold_cs_by_student > 0)
+#gold_bio_by_student <-subset(gold_bio_by_student, gold_bio_by_student > 1)
 
-black_cs_by_student <- calculate_num_courses_by_student("CS", black)
+black_cs_by_student <- calculate_num_courses_by_student("CS", black)+1
 black_bio_by_student <- calculate_num_courses_by_student("BIO", black)
-black_cs_by_student <- subset(black_cs_by_student, black_cs_by_student >0 )
-black_bio_by_student <-subset(black_bio_by_student, black_bio_by_student > 1)
+#black_cs_by_student <- subset(black_cs_by_student, black_cs_by_student >0 )
+#black_bio_by_student <-subset(black_bio_by_student, black_bio_by_student > 1)
 
-green_cs_by_student <- calculate_num_courses_by_student("CS", green)
+green_cs_by_student <- calculate_num_courses_by_student("CS", green)+1
 green_bio_by_student <- calculate_num_courses_by_student("BIO", green)
-green_cs_by_student <- subset(green_cs_by_student, green_cs_by_student >0 )
-green_bio_by_student <-subset(green_bio_by_student, green_bio_by_student > 1)
+#green_cs_by_student <- subset(green_cs_by_student, green_cs_by_student >0 )
+#green_bio_by_student <-subset(green_bio_by_student, green_bio_by_student > 1)
 
+# Calculate avg courses taken
+avg_gold_cs <- mean(gold_cs_by_student)
+sd_gold_cs <- sqrt(mean(gold_cs_by_student ^ 2) - mean(gold_cs_by_student)^2)
+avg_gold_bio <- mean(gold_bio_by_student)
+sd_gold_bio <-sqrt(mean(gold_bio_by_student ^ 2) - mean(gold_bio_by_student)^2)
+
+avg_black_cs <- mean(black_cs_by_student)
+sd_black_cs <- sqrt(mean(black_cs_by_student ^ 2) - mean(black_cs_by_student)^2)
+avg_black_bio <- mean(black_bio_by_student)
+sd_black_bio <- sqrt(mean(black_bio_by_student ^ 2) - mean(black_bio_by_student)^2)
+
+avg_green_cs <- mean(green_cs_by_student)
+sd_green_cs <- sqrt(mean(green_cs_by_student ^ 2) - mean(green_cs_by_student)^2)
+avg_green_bio <- mean(green_bio_by_student)
+sd_green_bio <- sqrt(mean(green_bio_by_student ^ 2) - mean(green_bio_by_student)^2)
+
+print(c("Black", "Gold", "Green"))
+print(c(sd_black_cs, sd_gold_cs, sd_green_cs))
+print(c(sd_black_bio, sd_gold_bio, sd_green_bio))
+# Z Test
+z.test(gold_cs_by_student, green_cs_by_student, alternative="two.sided", mu = 0, sigma.x = sd_gold_cs, sigma.y =sd_green_cs , conf.level = 0.95)
+z.test(gold_cs_by_student, black_cs_by_student, alternative="two.sided", mu = 0, sigma.x = sd_gold_cs, sigma.y =sd_black_cs , conf.level = 0.95)
 par(mfrow=c(1,1))
 
 # First three columns are shades of blue (CS5, CS60, CS70), everything after is white
-colors <- c("darkslategrey","darkslategray4", "darkslategray3")
+colors <- c("darkslategrey","darkslategray4")
 special <- c(colors, rep("white", 20))
 
-hist(gold_cs_by_student, las=1, breaks=20, xlim = c(0, 18), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Gold Students", col=special)
+hist(gold_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Gold Students", col=special)
 #hist(gold_bio_by_student, las=1, breaks=20, xlim = c(0, 18), ylim = c(0,500), xlab="Number of courses taken", ylab="Number of students", main="Number of Biology courses taken by CS5 Gold Students", col=special)
 hist(black_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Black Students", col=special)
 #hist(black_bio_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,200), xlab="Number of courses taken", ylab="Number of students", main="Number of Biology courses taken by CS5 Black Students", col=special)
 hist(green_cs_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,50), xlab="Number of courses taken", ylab="Number of students", main="Number of Post-CS5 Courses Taken by CS5 Green Students", col=special)
 #hist(green_bio_by_student, las=1, breaks=20, xlim = c(0, 20), ylim = c(0,100), xlab="Number of courses taken", ylab="Number of students", main="Number of Biology courses taken by CS5 Green Students", col=special)
-legend("topright", c("CS5","CS60", "CS70"), fill=colors)
+legend("topright", c("CS60","CS70"), fill=colors)
 
 #Calculate number of Bio majors
 gold_bio_majors <- calculate_num_bio_majors(gold)
